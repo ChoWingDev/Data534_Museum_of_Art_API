@@ -1,7 +1,3 @@
-It already **is** GitHub README format 🙂 (plain Markdown).
-You can copy/paste the whole thing below directly into `README.md` on GitHub.
-
-````md
 # TheMetR (DATA 534 Group Project)
 
 **TheMetR** is an R package that wraps **The Metropolitan Museum of Art (The Met) Collection REST API** and returns tidy, analysis-ready data structures (tibbles) for exploration and visualization.
@@ -27,7 +23,7 @@ You can copy/paste the whole thing below directly into `README.md` on GitHub.
 ```r
 # install.packages("remotes")
 remotes::install_github("YOUR_ORG_OR_USERNAME/TheMetR")
-````
+```
 
 Then load it:
 
@@ -142,5 +138,5 @@ This package is developed as part of the **DATA 534 Group Project**: build an R 
 
 ```
 
-If you want, paste your actual repo path (e.g., `MDS-2025-26/Data534_Museum_of_Art_API`) and I’ll replace the `YOUR_ORG_OR_USERNAME/TheMetR` line for you.
+ repo path ：`https://github.com/ChoWingDev/Data534_Museum_of_Art_API.
 ```
