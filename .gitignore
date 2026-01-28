@@ -1,0 +1,10 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# macOS + RStudio
+.DS_Store
+.Rhistory
+.RData
+.Rproj.user/
