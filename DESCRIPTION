@@ -2,7 +2,7 @@ Package: TheMetR
 Type: Package
 Title: R Wrapper for The Met Collection API
 Version: 0.0.0.9000
-Authors@R: c(person("Chowing", "Chan", role = c("aut", "cre")), person("Jiaqi", "Yao", role = "aut"), person("Rachel", "Kamphuis", role = "aut"))
+Authors@R: c(person("Chowing","Chan", role=c("aut","cre"), email="gladyschan0803@gmail.com"), person("Jiaqi","Yao", role="aut"), person("Rachel","Kamphuis", role="aut"))
 Description: An R package that wraps The Metropolitan Museum of Art Collection API and returns tidy, analysis-ready tibbles for exploration and visualization.
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -11,4 +11,9 @@ RoxygenNote: 7.3.3
 Imports:
     httr,
     jsonlite,
-    tibble
+    tibble,
+    dplyr
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+
