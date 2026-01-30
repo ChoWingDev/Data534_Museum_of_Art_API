@@ -1,9 +1,13 @@
 ---
-title: "test"
-author: "Cho Wing Chan"
-date: "2026-01-30"
-output: pdf_document
+title: "metExplore: Zero to Graph"
+output: rmarkdown::html_vignette
+author: "Jiaqi Yao"
+vignette: >
+  %\VignetteIndexEntry{metExplore: Zero to Graph}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -19,11 +23,11 @@ library(ggplot2)
 # 1) Search
 s <- met_search("monet", has_images = TRUE)
 
-# 2) Fetch objects (sample first N for speed)
+# 2) Fetch objects 
 ids <- head(s$object_id, 50)
 objs <- met_objects(ids)
 
-# 3) Clean for plotting (keep valid years)
+# 3) Clean for plotting 
 plot_df <- objs %>%
   filter(!is.na(object_end_date)) %>%
   mutate(object_end_date = as.numeric(object_end_date))
@@ -38,6 +42,3 @@ ggplot(plot_df, aes(x = object_end_date)) +
   )
 
 ```
-
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
