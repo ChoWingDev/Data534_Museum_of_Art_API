@@ -16,8 +16,16 @@ knitr::opts_chunk$set(
   message = FALSE
 )
 ```
+Purpose / Overview
+metExplore is a lightweight R wrapper around The Metropolitan Museum of Art Collection API.
+The goal of this package is to make it easy to:
+discover available departments in the collection,
+search objects with filters (e.g., department, images),
+retrieve metadata for one object or many objects,
+get analysis-ready results that work well with the tidyverse.
+This vignette walks through a complete workflow: departments → search → fetch → batch fetch → simple plot → reproducibility.
 
-
+Load metExplore plus a couple of tidyverse packages for data manipulation and plotting.
 ```{r}
 library(metExplore)
 library(dplyr)
@@ -25,7 +33,7 @@ library(ggplot2)
 
 ```
 
-
+A common first step is to see the valid department IDs so we can filter searches to a specific part of the museum.
 ```{r}
 deps <- met_departments()
 deps
@@ -38,6 +46,10 @@ dept_id
 
 ```
 
+Search with filters (met_search())
+Now we search for objects related to the keyword "cat".
+We also request objects that have images, and we restrict to the chosen department.
+met_search() returns a tibble of object_id values, and stores the total number of matches as an attribute.
 ```{r}
 res_search <- met_search(
   q = "cat",
@@ -50,7 +62,8 @@ head(res_search, 10)
 
 ```
 
-
+Sometimes a specific department might return zero results depending on the keyword.
+If that happens, we fall back to searching across all departments while still requiring images.
 ```{r}
 if (nrow(res_search) == 0) {
   res_search <- met_search(q = "cat", has_images = TRUE)
@@ -62,6 +75,8 @@ head(res_search, 10)
 
 ```
 
+Fetch one object (met_object())
+Once we have an object_id, we can retrieve detailed metadata for a single object.
 ```{r}
 one_id <- res_search$object_id[1]
 one_id
@@ -75,6 +90,9 @@ obj_one
 
 ```
 
+Fetch many objects (met_objects())
+For analysis and visualization, it is common to retrieve a batch of objects.
+Here we take the first 10 IDs from the search results and fetch them together.
 ```{r}
 ids <- head(res_search$object_id, 10)
 obj_many <- met_objects(ids)
@@ -82,6 +100,9 @@ dplyr::glimpse(obj_many)
 
 ```
 
+Output and a simple plot (ggplot2)
+As a simple example, we count how many objects in this small sample belong to each department,
+then visualize the distribution.
 ```{r}
 plot_df <- obj_many %>%
   filter(!is.na(department)) %>%
@@ -102,8 +123,9 @@ ggplot(plot_df, aes(x = reorder(department, n), y = n)) +
 
 ```
 
+Reproducibility
+Finally, we record session details so results can be reproduced.
 ```{r}
 sessionInfo()
-
 ```
 
