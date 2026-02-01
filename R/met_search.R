@@ -38,8 +38,11 @@ met_search <- function(q,
   total <- if (!is.null(res$total)) as.integer(res$total) else 0L
   ids <- if (!is.null(res$objectIDs)) as.integer(res$objectIDs) else integer()
   
-  out <- tibble::tibble(object_id = ids)
-  attr(out, "total") <- total
+  out <- tibble::tibble(
+    total = total,
+    object_id = ids
+  )
   out
+  
   
 }

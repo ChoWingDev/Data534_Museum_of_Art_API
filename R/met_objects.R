@@ -1,6 +1,6 @@
 #' Retrieves multiple pieces of art from the collection
 #' @param object_ids A vector of object IDs
-#' @return Tibble with one row per object or an empty if no objects are found
+#' @return Tibble with one row per object. Errors if `object_ids` is empty.
 #' @export
 
 met_objects <- function(object_ids) {
