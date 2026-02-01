@@ -10,7 +10,7 @@ met_objects(object_ids)
 \item{object_ids}{A vector of object IDs}
 }
 \value{
-Tibble with one row per object or an empty if no objects are found
+Tibble with one row per object. Errors if \code{object_ids} is empty.
 }
 \description{
 Retrieves multiple pieces of art from the collection

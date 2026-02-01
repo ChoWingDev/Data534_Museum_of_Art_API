@@ -1,4 +1,4 @@
-Package: TheMetR
+Package: metExplore
 Type: Package
 Title: R Wrapper for The Met Collection API
 Version: 0.0.0.9000
