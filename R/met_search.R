@@ -17,6 +17,7 @@
 #' met_search("monet", has_images = TRUE)
 #' }
 #' @export
+
 met_search <- function(q,
                        has_images = TRUE,
                        department_id = NULL,
@@ -33,16 +34,17 @@ met_search <- function(q,
   if (!is.null(is_on_view)) query$isOnView <- is_on_view
   if (!is.null(artist_or_culture)) query$artistOrCulture <- artist_or_culture
   
-  res <- met_get("search", query = query)
+  res <- met_get("/search", query = query)
   
-  total <- if (!is.null(res$total)) as.integer(res$total) else 0L
-  ids <- if (!is.null(res$objectIDs)) as.integer(res$objectIDs) else integer()
+  total <- res$total
+  object_ids <- res$objectIDs
   
-  out <- tibble::tibble(
-    total = total,
-    object_id = ids
-  )
+  if (is.null(object_ids)) object_ids <- integer()
+  if (is.null(total)) total <- 0
+  
+  out <- tibble::tibble(object_id = as.integer(object_ids))
+  attr(out, "total") <- total
   out
-  
-  
 }
+
+
