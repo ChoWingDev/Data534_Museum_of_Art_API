@@ -25,6 +25,12 @@ retrieve metadata for one object or many objects,
 get analysis-ready results that work well with the tidyverse.
 This vignette walks through a complete workflow: departments → search → fetch → batch fetch → simple plot → reproducibility.
 
+Install the metExplore package.
+```{r}
+remotes::install_github("ChoWingDev/Data534_Museum_of_Art_API")
+
+```
+
 Load metExplore plus a couple of tidyverse packages for data manipulation and plotting.
 ```{r}
 library(metExplore)
