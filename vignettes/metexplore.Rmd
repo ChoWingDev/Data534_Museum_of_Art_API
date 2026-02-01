@@ -1,44 +1,106 @@
 ---
-title: "metExplore: Zero to Graph"
+title: "metExplore: Explore The Met Collection API"
 output: rmarkdown::html_vignette
 author: "Jiaqi Yao"
 vignette: >
-  %\VignetteIndexEntry{metExplore: Zero to Graph}
+  %\VignetteIndexEntry{metExplore: Explore The Met Collection API}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## test
 
-```{r cars}
-library(TheMetR)
+```{r}
+library(metExplore)
 library(dplyr)
 library(ggplot2)
 
-# 1) Search
-s <- met_search("monet", has_images = TRUE)
+```
 
-# 2) Fetch objects 
-ids <- head(s$object_id, 50)
-objs <- met_objects(ids)
 
-# 3) Clean for plotting 
-plot_df <- objs %>%
-  filter(!is.na(object_end_date)) %>%
-  mutate(object_end_date = as.numeric(object_end_date))
+```{r}
+deps <- met_departments()
+deps
 
-# 4) Plot: histogram of end year
-ggplot(plot_df, aes(x = object_end_date)) +
-  geom_histogram(bins = 20) +
+```
+
+```{r}
+dept_id <- deps$department_id[1]
+dept_id
+
+```
+
+```{r}
+res_search <- met_search(
+  q = "cat",
+  has_images = TRUE,
+  department_id = dept_id
+)
+
+attr(res_search, "total")
+head(res_search, 10)
+
+```
+
+
+```{r}
+if (nrow(res_search) == 0) {
+  res_search <- met_search(q = "cat", has_images = TRUE)
+}
+
+head(res_search, 10)
+
+```
+
+```{r}
+one_id <- res_search$object_id[1]
+one_id
+
+```
+
+
+```{r}
+obj_one <- met_object(one_id)
+obj_one
+
+```
+
+```{r}
+ids <- head(res_search$object_id, 10)
+obj_many <- met_objects(ids)
+dplyr::glimpse(obj_many)
+
+```
+
+```{r}
+plot_df <- obj_many %>%
+  filter(!is.na(department)) %>%
+  count(department, sort = TRUE)
+
+plot_df
+
+```
+```{r}
+ggplot(plot_df, aes(x = reorder(department, n), y = n)) +
+  geom_col() +
+  coord_flip() +
   labs(
-    title = "The Met Collection: Monet Search Results (Sample)",
-    x = "Object end year",
-    y = "Count"
+    x = "Department",
+    y = "Number of objects (sample)",
+    title = "Objects by department (sample from search results)"
   )
 
 ```
+
+```{r}
+sessionInfo()
+
+```
+
